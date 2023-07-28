@@ -1,0 +1,35 @@
+.label {
+    margin: 0;
+    color: #A0A0A0;
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-bottom: 5px;
+}
+
+.input {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    background-color: transparent;
+    padding-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid #E8E8E8;
+    margin-bottom: 24px;
+}
+
+.input::placeholder {
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

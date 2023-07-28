@@ -1,0 +1,171 @@
+.header {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 70px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header_color {
+    background-color: #DDDEE3;
+}
+
+.header__logo {
+    width: 38px;
+    height: 38px;
+    margin-right: 44px;
+    background-image: url(../../images/logo.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.header__logo:hover {
+    opacity: 0.8;
+}
+
+.header__menu-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__navmenu {
+    display: flex;
+    align-items: center;
+}
+
+.header__navlink {
+    color: #000;
+    text-align: right;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    margin: 0;
+    padding-right: 16px;
+    text-decoration: none;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.header__navlink:hover {
+    opacity: 0.7;
+}
+
+.header__navlink_active {
+    font-weight: 500;
+}
+
+.header__login-button {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    box-sizing: border-box;
+    padding: 8px 20px;
+    text-align: center;
+    border-radius: 3px;
+    background: #3456F3;
+    border: none;
+    margin-left: 15px;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.header__login-button:hover {
+    opacity: 0.8;
+}
+
+.header__account-button-icon {
+    width: 12px;
+    height: 14px;
+    margin-right: 7px;
+    background-image: url(../../images/header_icon_profile.svg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.header__account-button {
+    border-radius: 50px;
+    border: 2px solid rgba(170, 170, 170, 0.2);
+    box-sizing: border-box;
+    padding: 8px 12px;
+    background: none;
+    display: flex;
+    text-decoration: none;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.header__account-button:hover {
+    opacity: 0.8;
+}
+
+.header__navmenu-button {
+    display: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    background-image: url(../../images/header_icon_navmenu.svg);
+    background-size: cover;
+    background-position: center;
+    width: 38px;
+    height: 38px;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.header__navmenu-button:hover {
+    opacity: 0.8;
+}
+
+.header__account-button-text {
+    margin: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+@media (max-width: 769px) {
+    .header {
+        padding: 18px 30px;
+    }
+
+    .header__menu-container {
+        display: none;
+    }
+
+    .header__navmenu-button {
+        display: block;
+    }
+}
+
+@media (max-width: 425px) {
+    .header {
+        padding: 18px 14px;
+    }
+
+    .header__navlink {
+        font-size: 10px;
+    }
+
+    .header__login-button {
+        font-size: 10px;
+        padding: 5px 12px;
+        margin-left: 0;
+    }
+}

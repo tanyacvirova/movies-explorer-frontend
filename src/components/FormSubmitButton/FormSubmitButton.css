@@ -1,0 +1,31 @@
+.form-button {
+    width: 100%;
+    margin: 0;
+    border-radius: 3px;
+    background-color: #3456F3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: none;
+    padding: 13px 0px 15px;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 425px) {
+    .form-button {
+        padding: 15px 0px;
+        font-size: 12px;
+    }
+}

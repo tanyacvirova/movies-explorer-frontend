@@ -1,0 +1,145 @@
+.search {
+    padding: 0px 70px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.search__form {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #E8E8E8;
+    align-items: center;
+}
+
+.search__input {
+    padding: 0;
+    width: 100%;
+    border: none;
+    font-size: 28px;
+    line-height: 30px;
+}
+
+.search__input::placeholder {
+    margin: 0;
+    padding: 0;
+    color: #A0A0A0;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.search__find-button {
+    border-radius: 48px;
+    border: none;
+    background: #3456F3;
+    color: #FFF;
+    text-align: center;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    padding: 8px 13px;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.search__find-button:hover {
+    opacity: 0.8;
+}
+
+.search__filter {
+    padding-top: 33px;
+    display: flex;
+    align-items: center;
+}
+
+.search__caption {
+    margin: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+    padding-left: 14px;
+}
+
+.search__filter-button {
+    width: 36px;
+    height: 20px;
+    object-fit: contain;
+    border: none;
+    background-color: transparent;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.search__filter-button:hover {
+    opacity: 0.8;
+}
+
+.search__filter-button_on {
+    background-image: url(../../images/movies_smalltumbon.svg);
+}
+
+.search__filter-button_off {
+    background-image: url(../../images/movies_smalltumboff.svg);
+}
+
+@media (max-width: 769px) {
+    .search {
+        padding: 0px 30px 60px;
+    }
+
+    .search__form {
+        margin-top: 80px;
+    }
+
+    .search__filter {
+        padding-top: 30px;
+        justify-content: flex-end;
+    }
+
+    .search__caption {
+        padding-right: 16px;
+        order: -1;
+    }
+}
+
+@media (max-width: 425px) {
+    .search {
+        padding: 0px 14px 50px;
+    }
+    
+    .search__form {
+        margin-top: 84px;
+        padding-bottom: 9px;
+    }
+    
+    .search__input {
+        height: 22px;
+    }
+    
+    .search__input::placeholder {
+        font-size: 18px;
+    }
+    
+    .search__filter {
+        padding-top: 40px;
+        justify-content: center;
+    }
+    
+    .search__caption {
+        font-size: 11px;
+        padding-right: 13px;
+        padding-left: 0px;
+    }
+}
