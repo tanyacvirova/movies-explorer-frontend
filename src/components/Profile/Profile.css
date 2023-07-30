@@ -1,0 +1,147 @@
+.profile {
+    max-width: 1280px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile__title {
+    margin: 0;
+    padding: 74px 0px 123px;
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.profile__form {
+    width: 410px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile__edit-button {
+    width: 100%;
+    margin: 0;
+    padding-top: 220px;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.profile__edit-button:hover {
+    opacity: 0.7;
+}
+
+.profile__input-section {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E8E8E8;
+    align-items: center;
+}
+
+.profile__input-section:last-of-type {
+    border: none;
+    padding-bottom: 0px;
+    padding-top: 16px;
+}
+
+.profile__form-caption {
+    margin: 0;
+    padding: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+}
+
+.profile__input {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+.profile__input::placeholder {
+    margin: 0;
+    color: #000;
+    text-align: right;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
+}
+
+.profile__logout-button {
+    color: #EE3465;
+    text-align: center;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    text-decoration: none;
+    padding: 16px 0px 70px;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.profile__logout-button:hover {
+    opacity: 0.7;
+}
+
+@media (max-width: 769px) {
+    .profile__title {
+        padding: 236px 0px 96px;
+    }
+
+    .profile__edit-button {
+        padding-top: 210px;
+    }
+
+    .profile__logout-button {
+        padding: 16px 0px 0px;
+    }
+}
+
+@media (max-width: 455px) {
+    .profile__title {
+        padding: 70px 0px 80px;
+    }
+    
+    .profile__form {
+        width: 260px;
+    }
+    
+    .profile__edit-button {
+        padding-top: 379px;
+        font-size: 12px;
+    }
+    
+    .profile__logout-button {
+        font-size: 12px;
+        padding: 16px 0px 0px;
+    }
+}

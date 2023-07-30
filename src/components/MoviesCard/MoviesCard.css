@@ -1,0 +1,125 @@
+.card {
+    width: 100%;
+    background-color: #F4F4F4;
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, 220px);
+    column-gap: 20px;
+    margin-bottom: 40px;
+    padding: 6px;
+}
+
+.card:last-of-type {
+    margin-bottom: 10px;
+}
+
+.card__about {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.card__title {
+    margin: 0;
+    padding-bottom: 13px;
+    color: #000;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.card__duration {
+    margin: 0;
+    color: #A0A0A0;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.card__like {
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    width: 14px;
+    height: 12px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.card__like:hover {
+    opacity: 0.8;
+}
+
+.card__like_on {
+    background-image: url(../../images/card_like-on-icon.svg);
+}
+
+.card__like_off {
+    background-image: url(../../images/card_like-off-icon.svg);
+}
+
+.card__delete-button {
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    width: 14px;
+    height: 12px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(../../images/card_delete-icon.svg);
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+}
+
+.card__delete-button:hover {
+    opacity: 0.8;
+}
+
+.card__cover {
+    width: 100%;
+    object-fit: contain;
+    align-self: center;
+}
+
+@media (max-width: 769px) {
+    .card:last-of-type {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 425px) {
+    .card {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 23px;
+        padding: 0;
+    }
+
+    .card:last-of-type {
+        margin-bottom: 20px;
+    }
+
+    .card__about {
+        flex-direction: row;
+        padding: 14px 12px;
+        order: 2;
+    }
+
+    .card__textbox {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card__title {
+        padding-bottom: 8px;
+        font-size: 12px;
+    }
+}
