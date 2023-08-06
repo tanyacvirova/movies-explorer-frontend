@@ -11,6 +11,10 @@
 * Страница авторизации,
 * 404
 
-Ссылка на репозиторий: https://github.com/tanyacvirova/movies-explorer-frontend 
+Ссылка на репозиторий: https://github.com/tanyacvirova/movies-explorer-frontend
+
+Ссылка на пул реквест, открытый из ветки level-3 в main: https://github.com/tanyacvirova/movies-explorer-frontend/pull/2
+
+Ссылка на задеплоенный проект: https://movies-explorer.nomoreparties.co
 
 Ссылка на макет в .fig: https://disk.yandex.com/d/Iicqd8bZKfWd6A 
