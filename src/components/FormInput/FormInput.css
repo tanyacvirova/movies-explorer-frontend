@@ -23,13 +23,21 @@
     border: none;
     border-bottom: 1px solid #E8E8E8;
     margin-bottom: 24px;
+    outline: none;
 }
 
-.input::placeholder {
-    color: #000;
+.input:focus {
+    border-bottom: 1px solid #3456F3;
+}
+
+.error {
+    margin: 0;
+    display: block;
+    padding-bottom: 20px;
+    color: #FF3055;;
     font-family: Inter;
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     line-height: normal;
 }

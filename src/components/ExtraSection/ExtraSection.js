@@ -1,9 +1,8 @@
-function ExtraSection() {
-    const currentLocation = window.location.pathname;
+function ExtraSection(props) {
 
     return (
         <section className="extra-section">
-            {(currentLocation === '/movies') && <button className="extra-section__button" type="button">Ещё</button>}
+            {(props.isVisible) && <button className="extra-section__button" type="button" onClick={props.onMoreMovies}>Ещё</button>}
         </section>
     );
 }
