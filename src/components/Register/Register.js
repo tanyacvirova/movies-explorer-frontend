@@ -12,7 +12,7 @@ function Register(props) {
     const [isValid, setIsValid] = useState(false);
     const [isActiveButtonStatus, setisActiveButtonStatus] = useState(false);
     const reName = '[a-zA-Zа-яА-ЯёЁ\\- ]+';
-    const reEmail = '[\\w\\-.]+@[\\w\\-.]+.[a-zA-Z]{2,5}';
+    const reEmail = '[\\w\\-.]+@[\\w\\-.]+\\.[a-zA-Z]{2,5}';
 
     useEffect(() => {
         isValid ? setisActiveButtonStatus(true) : setisActiveButtonStatus(false);
