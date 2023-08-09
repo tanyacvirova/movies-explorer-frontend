@@ -10,7 +10,7 @@ function Login(props) {
     const [errors, setErrors] = useState({ email: '', password: '' });
     const [isValid, setIsValid] = useState(false);
     const [isActiveButtonStatus, setisActiveButtonStatus] = useState(false);
-    const reEmail = '[\\w\\-.]+@[\\w\\-.]+.[a-zA-Z]{2,5}';
+    const reEmail = '[\\w\\-.]+@[\\w\\-.]+\\.[a-zA-Z]{2,5}';
     
     useEffect(() => {
         isValid ? setisActiveButtonStatus(true) : setisActiveButtonStatus(false);
