@@ -5,17 +5,25 @@ import Techs from "../Techs/Techs";
 import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 import Footer from '../Footer/Footer';
+import Navigation from "../Navigation/Navigation";
 
-function Main() {
+function Main(props) {
     return (
         <>
-            <Header />
+            <Header
+                isLoggedIn={props.isLoggedIn}
+                onNavBarClick={props.onNavBarClick}
+            />
             <main className="main">
                 <Promo />
                 <AboutProject />
                 <Techs />
                 <AboutMe />
                 <Portfolio />
+                <Navigation
+                    isVisibleNavBar={props.isVisibleNavBar}
+                    closeNavBar={props.closeNavBar}
+                />
             </main>
             <Footer />
         </>

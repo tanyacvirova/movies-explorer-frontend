@@ -1,26 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function SearchForm() {
-    const [isOnFilterButton, setIsOnFilterButtonStatus] = useState(false);
+function SearchForm(props) {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [shortFilmFilter, setShortFilmFilter] = useState(false);
+    const currentLocation = window.location.pathname;
 
-    const handleButtonClick = () => {
-        if (isOnFilterButton) {
-            setIsOnFilterButtonStatus(false);
-        } else {
-            setIsOnFilterButtonStatus(true);
+    useEffect(() => {
+        if ((localStorage.getItem('query')) && (currentLocation === '/movies')) {
+            setSearchQuery(JSON.parse(localStorage.getItem('query'))['query']);
+            setShortFilmFilter(JSON.parse(localStorage.getItem('query'))['shortFilmFilter']);
         }
-    };
+    }, [currentLocation]);
+
+    function handleSearchQueryChange(e) {
+        setSearchQuery(e.target.value);
+    }
+
+    function handleShortFilmFilterChange(e) {
+        setShortFilmFilter(e.target.checked);
+        props.onFindButton({
+            'query': searchQuery,
+            'shortFilmFilter': e.target.checked
+        });
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        props.onFindButton({
+            'query': searchQuery,
+            'shortFilmFilter': shortFilmFilter
+        });
+    }
 
     return (
         <section className="search">
-            <form className="search__form" noValidate>
-                <input className="search__input" placeholder="Фильм"></input>
+            <form className="search__form" noValidate onSubmit={handleSubmit}>
+                <input className="search__input" type="text" placeholder="Фильм" value={searchQuery} onChange={handleSearchQueryChange} />
                 <button className="search__find-button" type="submit">Найти</button>
             </form>
-            <div className="search__filter">
-                <button className={isOnFilterButton ? "search__filter-button search__filter-button_on" : "search__filter-button search__filter-button_off"} onClick={handleButtonClick}></button>
-                <p className="search__caption">Короткометражки</p>
-            </div>
+            <label className="search__filter">
+                <input className="search__input" type={"checkbox"} checked={shortFilmFilter} onChange={handleShortFilmFilterChange} />
+                <span className="search__pseudo-input" />
+                <span className="search__caption">Короткометражки</span>
+            </label>
         </section>
     );
 }

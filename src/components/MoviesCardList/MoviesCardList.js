@@ -1,20 +1,17 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
-import { cards, savedCards } from "../../utils/cards.js";
 
-function MoviesCardList() {
+function MoviesCardList(props) {
     const currentLocation = window.location.pathname;
-
-    let cardList;
-    if (currentLocation === '/movies') {
-        cardList = cards;
-    } else if (currentLocation === '/saved-movies') {
-        cardList = savedCards
-    };
 
     return (
         <section className="cardlist">
-            {cardList.map(card => {
-                return (<MoviesCard key={card.id} card={card} />);
+            {props.movies.map(card => {
+                return (<MoviesCard
+                    key={(currentLocation === '/movies') ? card.id : card._id}
+                    card={card}
+                    savedMovies={props.savedMovies}
+                    onCardLike={props.onCardLike}
+                    onCardDelete={props.onCardDelete} />);
             })}
         </section>
     );

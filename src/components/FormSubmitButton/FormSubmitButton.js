@@ -1,6 +1,9 @@
 function FormSubmitButton(props) {
     return (
-        <button className="form-button" type="submit">{props.text}</button>
+        <button
+            className={props.status ? "form-button" : 'form-button form-button_disabled'}
+            type="submit">{props.text}
+        </button>
     )
 }
 
