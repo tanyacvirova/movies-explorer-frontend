@@ -1,7 +1,10 @@
 import { Navigate } from "react-router-dom";
 
 function ProtectedRoute({ element: Component, ...props }) {
-    return(
+    if (!props.isCompletedDownload) {
+        return;
+    }
+    return (
         props.isLoggedIn ? <Component {...props} /> : <Navigate to="/" replace />
     );
 }

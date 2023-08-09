@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 /* contexts */
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
@@ -21,13 +21,14 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute.js';
 
 function App() {
   /* declare variables */
-  const screenWidth = useRef(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
   const [isMoreMoviesButtonVisible, setIsMoreMoviesButtonVisible] = useState(false);
-  const [slicer, setSlicer] = useState((screenWidth.current > 425) ? 7 : 5);
+  const [slicer, setSlicer] = useState((screenWidth > 425) ? 7 : 5);
   const [moviesErrorSectionStatus, setMoviesErrorSectionStatus] = useState(false);
   const [savedMoviesErrorSectionStatus, setSavedMoviesErrorSectionStatus] = useState(false);
   const [moviesErrorMessage, setMoviesErrorMessage] = useState('');
@@ -36,52 +37,64 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ _id: '', name: '', email: '' });
   const [statusEditProfile, setStatusEditProfile] = useState({ status: '', message: '' });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState('');
   const [isVisibleNavBar, setIsVisibleNavBar] = useState(false);
+  const [isCompletedDownload, setIsCompletedDownload] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    setToken(jwt);
-    mainApi.setToken(jwt);
-  }, []);
+    const handleWindowResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleWindowResize);
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  });
 
   useEffect(() => {
-    if (!token) {
+    const jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+      setIsCompletedDownload(true);
       return;
     }
-
-    auth.getUserData(token)
+    setIsCompletedDownload(false);
+    auth.getUserData(jwt)
       .then((user) => {
-        setCurrentUser({ _id: user._id, name: user.name, email: user.email });
         setIsLoggedIn(true);
+        mainApi.setToken(jwt);
+        setCurrentUser({ _id: user._id, name: user.name, email: user.email });
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsCompletedDownload(true);
       });
-  }, [token]);
+  }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
+    if (localStorage.getItem('movies')) {
+      setFilteredMovies(JSON.parse(localStorage.getItem('movies')));
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (!isLoggedIn) {
       return;
     }
     setIsLoading(true);
-    if (localStorage.getItem('movies')) {
-      setFilteredMovies(JSON.parse(localStorage.getItem('movies')));
-    }
-    setIsLoading(false);
-  }, [isLoggedIn]);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      return;
-    }
     moviesApi.getMovies()
       .then(data => {
         setMovies(data);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [isLoggedIn]);
 
@@ -89,16 +102,18 @@ function App() {
     if (!isLoggedIn) {
       return;
     }
+    setIsLoading(true);
     mainApi.getMovies()
       .then(data => {
         setSavedMovies(data);
       })
-      .catch();
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [isLoggedIn]);
-
-  useEffect(() => {
-    setFilteredSavedMovies(savedMovies);
-  }, [savedMovies]);
 
   useEffect(() => {
     if (filteredMovies.length > slicer) {
@@ -154,10 +169,12 @@ function App() {
   function handleCardDelete(card) {
     mainApi.deleteMovie(card._id)
       .then(() => {
-        const updated = savedMovies.filter(function (item) {
+        setSavedMovies(savedMovies.filter(function (item) {
           return item.nameRU !== card.nameRU;
-        });
-        setSavedMovies(updated);
+        }));
+        setFilteredSavedMovies(filteredSavedMovies.filter(function (item) {
+          return item.nameRU !== card.nameRU;
+        }));
       })
       .catch((err) => {
         console.log(err);
@@ -165,8 +182,12 @@ function App() {
   }
 
   function handleMoreMoviesClick() {
-    setSlicer(slicer + ((screenWidth.current > 425) ? 7 : 5));
+    setSlicer(slicer + ((screenWidth > 425) ? 7 : 5));
   }
+
+  useEffect(() => {
+    setSlicer((screenWidth > 425) ? 7 : 5);
+  }, [screenWidth]);
 
   function filterMovies(searchQuery, array) {
     let filteredArray;
@@ -183,42 +204,40 @@ function App() {
   };
 
   function handleFilterMovies(searchQuery) {
-    setIsLoading(true);
     setMoviesErrorSectionStatus(false);
     localStorage.setItem('query', JSON.stringify(searchQuery));
     if (searchQuery.query.length < 1) {
       setFilteredMovies([]);
       localStorage.setItem('movies', JSON.stringify([]));
-      setIsLoading(false);
       setMoviesErrorSectionStatus(true);
       setMoviesErrorMessage('Нужно ввести ключевое слово');
     } else {
       const result = filterMovies(searchQuery, movies);
       setFilteredMovies(result);
       localStorage.setItem('movies', JSON.stringify(result));
-      setIsLoading(false);
       if (result.length < 1) {
         setMoviesErrorSectionStatus(true);
         setMoviesErrorMessage('Ничего не найдено');
       }
+      setSlicer((screenWidth > 425) ? 7 : 5);
     };
   }
 
   function handleFilterSavedMovies(searchQuery) {
-    setIsLoading(true);
     setSavedMoviesErrorSectionStatus(false);
+    setIsFiltered(true);
     if (searchQuery.query.length < 1) {
       setFilteredSavedMovies([]);
-      setIsLoading(false);
       setSavedMoviesErrorSectionStatus(true);
       setSavedMoviesErrorMessage('Нужно ввести ключевое слово');
     } else {
       const result = filterMovies(searchQuery, savedMovies);
-      setFilteredSavedMovies(result);
-      setIsLoading(false);
       if (result.length < 1) {
+        setFilteredSavedMovies([]);
         setSavedMoviesErrorSectionStatus(true);
         setSavedMoviesErrorMessage('Ничего не найдено');
+      } else {
+        setFilteredSavedMovies(result);
       }
     };
   }
@@ -240,18 +259,16 @@ function App() {
     localStorage.removeItem("query");
     localStorage.removeItem("movies");
     setIsLoggedIn(false);
-    setToken("");
     setCurrentUser({ _id: '', name: '', email: '' });
-    navigate("/");
+    navigate('/');
   }
 
   function handleLogIn(data) {
     auth.authorizeUser(data)
       .then((res) => {
-        localStorage.setItem("jwt", res.token);
-        setToken(res.token);
-        mainApi.setToken(res.token);
         setIsLoggedIn(true);
+        localStorage.setItem("jwt", res.token);
+        mainApi.setToken(res.token);
         navigate('/movies');
       })
       .catch((err) => {
@@ -264,7 +281,6 @@ function App() {
     auth.registerUser(data)
       .then((res) => {
         const logInData = { email: res.email, password: data.password };
-        console.log(logInData);
         handleLogIn(logInData);
       }).catch((err) => {
         console.log(err);
@@ -292,12 +308,13 @@ function App() {
             errorSectionIsOn={moviesErrorSectionStatus}
             errorMessage={moviesErrorMessage}
             isLoggedIn={isLoggedIn}
+            isCompletedDownload={isCompletedDownload}
             onNavBarClick={() => { setIsVisibleNavBar(true) }}
             isVisibleNavBar={isVisibleNavBar}
             closeNavBar={() => { setIsVisibleNavBar(false) }}
           />} />
           <Route path="/saved-movies" element={<ProtectedRoute element={SavedMovies}
-            movies={filteredSavedMovies}
+            movies={isFiltered ? filteredSavedMovies : savedMovies}
             isVisible={false}
             isLoading={isLoading}
             onCardDelete={(data) => handleCardDelete(data)}
@@ -305,6 +322,8 @@ function App() {
             errorSectionIsOn={savedMoviesErrorSectionStatus}
             errorMessage={savedMoviesErrorMessage}
             isLoggedIn={isLoggedIn}
+            isCompletedDownload={isCompletedDownload}
+            onUnmount={() => setIsFiltered(false)}
             onNavBarClick={() => { setIsVisibleNavBar(true) }}
             isVisibleNavBar={isVisibleNavBar}
             closeNavBar={() => { setIsVisibleNavBar(false) }}
@@ -316,13 +335,14 @@ function App() {
               onEditButton={(data) => handleEditButtonClick(data)}
               statusEditProfile={statusEditProfile}
               isLoggedIn={isLoggedIn}
+              isCompletedDownload={isCompletedDownload}
               onNavBarClick={() => { setIsVisibleNavBar(true) }}
               isVisibleNavBar={isVisibleNavBar}
               closeNavBar={() => { setIsVisibleNavBar(false) }}
             />}
           />
-          <Route path="/signin" element={<Login onLogInButton={(data) => handleLogIn(data)} />} />
-          <Route path="/signup" element={<Register onSignUpButton={(data) => handleSignUp(data)} />} />
+          <Route path="/signin" element={isLoggedIn ? <Navigate to="/profile" replace /> : <Login onLogInButton={(data) => handleLogIn(data)} />} />
+          <Route path="/signup" element={isLoggedIn ? <Navigate to="/profile" replace /> : <Register onSignUpButton={(data) => handleSignUp(data)} />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

@@ -11,6 +11,8 @@ function Register(props) {
     const [errors, setErrors] = useState({ name: '', email: '', password: '' });
     const [isValid, setIsValid] = useState(false);
     const [isActiveButtonStatus, setisActiveButtonStatus] = useState(false);
+    const reName = '[a-zA-Zа-яА-ЯёЁ\\- ]+';
+    const reEmail = '[\\w\\-.]+@[\\w\\-.]+.[a-zA-Z]{2,5}';
 
     useEffect(() => {
         isValid ? setisActiveButtonStatus(true) : setisActiveButtonStatus(false);
@@ -46,7 +48,7 @@ function Register(props) {
                         value={values.name}
                         onInputChange={handleInputChange}
                         errorMessage={errors.name}
-                        pattern='[a-zA-zА-Яа-я\- ]*'
+                        pattern={reName}
                     />
                     <FormInput
                         id={"email"}
@@ -55,6 +57,7 @@ function Register(props) {
                         value={values.email}
                         onInputChange={handleInputChange}
                         errorMessage={errors.email}
+                        pattern={reEmail}
                     />
                     <FormInput
                         id={"password"}

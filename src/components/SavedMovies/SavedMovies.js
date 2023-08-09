@@ -6,8 +6,16 @@ import ExtraSection from "../ExtraSection/ExtraSection";
 import Navigation from "../Navigation/Navigation";
 import Footer from "../Footer/Footer";
 import ErrorSection from "../ErrorSection/ErrorSection";
+import { useEffect } from "react";
 
 function SavedMovies(props) {
+
+    useEffect(() => {
+        return () => {
+            props.onUnmount();
+        }
+    }, []);
+
     return (
         <>
             <Header

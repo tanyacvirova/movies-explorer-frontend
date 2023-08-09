@@ -11,6 +11,7 @@ function FormInput(props) {
                 onChange={props.onInputChange}
                 minLength={(props.id === 'name') ? 2 : ''}
                 maxLength={(props.id === 'name') ? 30 : ''}
+                pattern={props.pattern}
                 required />
             <span className="error">{props.errorMessage}</span>
         </>
